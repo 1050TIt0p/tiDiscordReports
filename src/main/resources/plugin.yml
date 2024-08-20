@@ -1,0 +1,9 @@
+name: tiDiscordReports
+version: '${project.version}'
+main: ru.matveylegenda.tidiscordreports.TiDiscordReports
+api-version: '1.16'
+libraries:
+  - net.elytrium:serializer:1.1.1
+  - net.dv8tion:JDA:5.0.2
+commands:
+  report:
