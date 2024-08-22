@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.matveylegenda.tidiscordreports.commands.ReportCommand;
 import ru.matveylegenda.tidiscordreports.listeners.ButtonListener;
 import ru.matveylegenda.tidiscordreports.listeners.ModalListener;
+import ru.matveylegenda.tidiscordreports.utils.Metrics;
 import ru.matveylegenda.tidiscordreports.utils.configs.MainConfig;
 import ru.matveylegenda.tidiscordreports.utils.configs.MessagesConfig;
 
@@ -65,6 +66,8 @@ public final class TiDiscordReports extends JavaPlugin {
         }
 
         getCommand("report").setExecutor(new ReportCommand());
+
+        new Metrics(this, 23130);
     }
 
     public static TiDiscordReports getInstance() {

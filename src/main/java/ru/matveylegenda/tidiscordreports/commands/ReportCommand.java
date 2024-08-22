@@ -14,6 +14,9 @@ import ru.matveylegenda.tidiscordreports.utils.configs.MessagesConfig;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import static ru.matveylegenda.tidiscordreports.utils.ColorParser.colorize;
 
@@ -22,6 +25,8 @@ public class ReportCommand implements CommandExecutor {
 
     private MainConfig mainConfig = plugin.mainConfig;
     private MessagesConfig messagesConfig = plugin.messagesConfig;
+
+    private Map<UUID, Long> cooldowns = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
@@ -50,6 +55,27 @@ public class ReportCommand implements CommandExecutor {
             }
 
             Player player = (Player) sender;
+
+            if (cooldowns.containsKey(player.getUniqueId())) {
+                long cooldownStartTime = cooldowns.get(player.getUniqueId());
+                long cooldownDuration = mainConfig.cooldownTime * 1000;
+                long timePassed = System.currentTimeMillis() - cooldownStartTime;
+
+                if (timePassed < cooldownDuration) {
+                    long timeRemaining = (cooldownDuration - timePassed) / 1000;
+                    player.sendMessage(
+                            colorize(
+                                    messagesConfig.minecraft.cooldownMessage
+                                            .replace("{time}", String.valueOf(timeRemaining))
+                                            .replace("{prefix}", messagesConfig.minecraft.prefix)
+                            )
+                    );
+
+                    return true;
+                }
+            }
+
+            cooldowns.put(player.getUniqueId(), System.currentTimeMillis());
 
             String reportedPlayer = args[0];
             String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));

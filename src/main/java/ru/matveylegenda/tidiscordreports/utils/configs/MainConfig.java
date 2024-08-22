@@ -8,6 +8,23 @@ import ru.matveylegenda.tidiscordreports.TiDiscordReports;
 
 public class MainConfig extends YamlSerializable {
 
+//    @Comment({
+//            @CommentValue(" Bot token")
+//    })
+//    public String token = "TOKEN";
+//
+//    @NewLine(amount = 1)
+//    @Comment({
+//            @CommentValue(" ID of the channel where report messages will be sent")
+//    })
+//    public String channelId = "123";
+//
+//    @NewLine(amount = 1)
+//    @Comment({
+//            @CommentValue(" Command usage cooldown time in seconds")
+//    })
+//    public int cooldownTime = 300;
+
     @Comment({
             @CommentValue(" Токен бота")
     })
@@ -18,6 +35,12 @@ public class MainConfig extends YamlSerializable {
             @CommentValue(" ID канала в который будут отправляться сообщения с репортами")
     })
     public String channelId = "123";
+
+    @NewLine(amount = 1)
+    @Comment({
+            @CommentValue(" Время задержки использования команды в секундах")
+    })
+    public int cooldownTime = 300;
 
     public void reloadConfig() {
         reload(TiDiscordReports.getInstance().mainConfigFile.toPath());
